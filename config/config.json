@@ -1,0 +1,8 @@
+{
+  "mysql": {
+    "host": "172.18.0.3",
+    "port": "3306",
+    "user": "appadmin",
+    "password": "SuperSecurePassword42"
+  }
+}

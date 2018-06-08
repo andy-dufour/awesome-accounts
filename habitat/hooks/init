@@ -1,0 +1,44 @@
+#!/bin/sh
+set -e
+
+export HOME="/hab/svc/awesome-accounts/data"
+. '/hab/svc/awesome-accounts/config/app_env.sh'
+
+{{~ #if bind.database}}
+  {{~ #eachAlive bind.database.members as |member|}}
+    {{~ #if @first}}
+# I'm clustered
+mysqlhost="{{member.sys.ip}}"
+mysqlport="{{member.cfg.port}}"
+mysqluser="{{member.cfg.username}}"
+mysqlpassword="{{member.cfg.password}}"
+    {{~ /if}}
+
+    {{~ #if member.leader}}
+# I'm non-clustered
+mysqlhost="{{member.sys.ip}}"
+mysqlport="{{member.cfg.port}}"
+mysqluser="{{member.cfg.username}}"
+mysqlpassword="{{member.cfg.password}}"
+    {{~ /if}}
+  {{~ /eachAlive}}
+{{~ /if}}
+
+if [ -z $mysqlhost ]
+then
+  echo "Couldn't find mysql connection info, exiting."
+  sleep 5
+  exit 1
+fi
+
+until nc -w30 $mysqlhost:3306
+do
+  echo "Waiting for database connection..."
+  # wait for 5 seconds before check again
+  sleep 5
+  exit 1
+done
+
+sleep 30 # wait 30 seconds for ready
+
+{{pkgPathFor "core/mysql-client"}}/bin/mysql -h $mysqlhost -P $mysqlport -u $mysqluser -p$mysqlpassword < {{pkg.svc_config_path}}/todos.sql

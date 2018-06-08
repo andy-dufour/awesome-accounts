@@ -1,0 +1,14 @@
+{
+  "mysql": {
+    {{~ #if bind.database}}
+      {{~ #eachAlive bind.database.members as |member|}}
+        {{~ #if @first}}
+    "host": "{{member.sys.ip}}",
+    "port": "{{member.cfg.port}}",
+    "user": "{{member.cfg.username}}",
+    "password": "{{member.cfg.password}}"
+        {{~ /if}}
+      {{~ /eachAlive}}
+    {{~ /if}}
+  }
+}

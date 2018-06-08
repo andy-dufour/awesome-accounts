@@ -1,0 +1,4 @@
+app_username = "todos"
+app_password = "habitat"
+root_password = "chef"
+bind = "0.0.0.0"

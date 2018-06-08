@@ -1,0 +1,60 @@
+version: '3'
+services:
+  mysql1:
+    image: core/mysql:latest
+    environment:
+      HAB_MYSQL: |
+        app_username = 'appadmin'
+        app_password = 'SuperSecurePassword42'
+        bind = '0.0.0.0'
+        root_password = 'EvenMoreSecurePassword2018'
+        server_id = 1
+    volumes:
+      - mysql1-data:/hab/svc/mysql/data
+    command: --group cluster
+      --topology leader
+
+  mysql2:
+    image: core/mysql:latest
+    environment:
+      HAB_MYSQL: |
+        app_username = 'appadmin'
+        app_password = 'SuperSecurePassword42'
+        bind = '0.0.0.0'
+        root_password = 'EvenMoreSecurePassword2018'
+        server_id = 2
+    volumes:
+      - mysql2-data:/hab/svc/mysql/data
+    command: --peer mysql1
+      --group cluster
+      --topology leader
+
+  mysql3:
+    image: core/mysql:latest
+    environment:
+      HAB_MYSQL: |
+        app_username = 'appadmin'
+        app_password = 'SuperSecurePassword42'
+        bind = '0.0.0.0'
+        root_password = 'EvenMoreSecurePassword2018'
+        server_id = 3
+    volumes:
+      - mysql3-data:/hab/svc/mysql/data
+    command: --peer mysql1
+      --group cluster
+      --topology leader
+
+  nodeapp1:
+    image: andy-dufour/awesome-accounts:latest
+    ports:
+      - "8000:8000"
+      - "5000:5000"
+    depends_on:
+      - "mysql1"
+    command: --peer mysql1
+      --bind database:mysql.cluster
+
+volumes:
+  mysql1-data:
+  mysql2-data:
+  mysql3-data:

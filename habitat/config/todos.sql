@@ -1,0 +1,8 @@
+CREATE DATABASE IF NOT EXISTS todos;
+
+CREATE TABLE IF NOT EXISTS todos.accounts (
+     id INT NOT NULL AUTO_INCREMENT,
+     name VARCHAR(255) NOT NULL,
+     description TEXT(1000),
+     PRIMARY KEY (id)
+);

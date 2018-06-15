@@ -1,2 +1,3 @@
 [app]
 port = 5000
+banner = "Habicat waves to everyone!"

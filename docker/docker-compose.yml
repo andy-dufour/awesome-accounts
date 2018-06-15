@@ -13,6 +13,8 @@ services:
       - mysql1-data:/hab/svc/mysql/data
     command: --group cluster
       --topology leader
+    ports:
+      - "3306:3306"
 
   mysql2:
     image: core/mysql:latest

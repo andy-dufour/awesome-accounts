@@ -10,5 +10,8 @@
         {{~ /if}}
       {{~ /eachAlive}}
     {{~ /if}}
+  },
+  "app": {
+    "banner": "{{cfg.app.banner}}"
   }
 }

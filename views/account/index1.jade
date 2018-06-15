@@ -3,9 +3,22 @@ block content
   h1 Account List
   a(href="account/add") Add
   br
-  table(border="1")
-   tr
-    th Id
-    th Name
-    th Description
-    th Action
+  div
+    table(border="1")
+      thead
+        tr
+          th Id
+          th Name
+          th Description
+          th
+          th
+      tbody
+        each account in accounts
+          tr(class=(i % 2 == 0) ? 'odd' : 'even')
+            td #{account.id}
+            td #{account.name}
+            td #{account.description}
+            td
+              a(href="/account/edit/"+ account.id) Edit
+            td
+              a(href="/account/delete/" + account.id, onclick="return confirm('Are you sure?')") Delete

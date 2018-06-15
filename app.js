@@ -26,6 +26,7 @@ var mysql_user = nconf.get('mysql')['user'];
 var mysql_password = nconf.get('mysql')['password'];
 var mysql_port = nconf.get('mysql')['port'];
 var mysql_database = 'todos';
+var banner = nconf.get('app')['banner'];
 
 console.error("Connecting to mysql on host: " + mysql_host + ", port: " + mysql_port + ", user: " + mysql_user + ", password: " + mysql_password + ", database:" + mysql_database);
 

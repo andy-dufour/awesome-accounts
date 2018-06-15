@@ -1,6 +1,14 @@
 var express = require('express');
 var router = express.Router();
 async = require("async");
+const nconf = require('nconf');
+
+
+var config_file = process.env.APP_CONFIG || 'config/config.json';
+
+nconf.file({ file: config_file });
+
+var banner = nconf.get('app')['banner'];
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -21,7 +29,7 @@ router.get('/', function(req, res, next) {
 		],
 		function(err, results){
 			// console.log(results);
-			var data = {accounts: results[0]};
+			var data = {accounts: results[0], banner: banner};
 			// console.log(data.accounts[0].id);
 			res.render('account/index1', data);
 		}
@@ -31,7 +39,8 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/account/add', function(req, res, next) {
-	res.render('account/add');
+	var data = {banner: banner};
+	res.render('account/add', data);
 });
 
 router.post('/account/add', function(req, res, next) {
@@ -94,7 +103,7 @@ router.get('/account/edit/:id', function(req, res, next) {
 
 		],
 		function(err, results){
-			var data = {accounts: results[0]};
+			var data = {accounts: results[0], banner: banner};
 			res.render('account/edit', data);
 		}
 	);

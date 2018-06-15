@@ -1,8 +1,11 @@
 {
   "mysql": {
-    "host": "172.18.0.3",
+    "host": "127.0.0.1",
     "port": "3306",
     "user": "appadmin",
     "password": "SuperSecurePassword42"
+  },
+  "app": {
+    "banner": "Habicat waves to you!"
   }
 }

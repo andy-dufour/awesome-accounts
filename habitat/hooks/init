@@ -13,14 +13,6 @@ mysqlport="{{member.cfg.port}}"
 mysqluser="{{member.cfg.username}}"
 mysqlpassword="{{member.cfg.password}}"
     {{~ /if}}
-
-    {{~ #if member.leader}}
-# I'm non-clustered
-mysqlhost="{{member.sys.ip}}"
-mysqlport="{{member.cfg.port}}"
-mysqluser="{{member.cfg.username}}"
-mysqlpassword="{{member.cfg.password}}"
-    {{~ /if}}
   {{~ /eachAlive}}
 {{~ /if}}
 

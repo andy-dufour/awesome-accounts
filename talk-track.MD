@@ -1,6 +1,15 @@
 # Prep
 
-Spin up the terraform plan.
+Spin up the terraform plan. Paste your public IPs here incase you lose them later:
+
+
+public_ips_mysql = [
+    54.203.119.3,
+    52.34.65.4,
+    34.217.76.213
+]
+public_ips_nodeapp = 34.217.32.84
+public_ips_supervisor_peer = 34.217.206.53
 
 Have 5 ssh windows open. 3 connected to mysql, 1 to nodejs vms. One in the project directory ready to spin up Docker.
 
@@ -75,6 +84,8 @@ Alright, lets go check out our application.
 
 `<open a web browser and visit your nodejs site on port 5000>`
 
+http://34.217.32.84:5000
+
 Here's our application. It may not look like much, but this is a fully functional nodejs app that is connected to a HA mysql cluster <*Show some functionality*>. It fulfills a large portion of what many of your home baked applications will need. In addition to this, we've packaged up a lot of agents and COTS software with other customers. Imagine a world where most of your applications are managed via the same lifecycle regardless of language, runtime or whether you built it or not.
 
 OK, thats enough of this boring VM stuff. Let's go look at some new container hotness.
@@ -105,6 +116,8 @@ Let's open our default.toml, and change our banner to be something different.
 
 Alright, now lets build this new copy of our app.
 
+`$ build`
+
 - Walk them through habitat.sh
 
 Let's publish it.
@@ -116,3 +129,15 @@ Let's promote it.
 `hab pkg promote andy-dufour/awesome-accounts/0.1.0/20180615070135 stable`
 
 Let's see it deploy to our VM infrastructure.
+
+Finally, lets take a look at how we can query the running habitat supervisor for information:
+
+`34.217.32.84:9631/services/awesome-accounts/default`
+
+So, what we've explored today is the deployment of a multi-tiered application using native habitat constructs on both VMs and containers.
+
+
+
+Habitat can also export to many different runtimes like Mesos, Kubernetes, Helm, and more.
+
+We're seeing other consumption models as well where your application may run in a PCF instance, or inside of Kubernetes natively, and you call out to an OpenService broker API for your back-end service. We have customers using that to
